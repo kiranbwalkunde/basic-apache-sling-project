@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/home/users/sadashiv"/>
+    <filter root="/home/users/system/sadashiv"/>
+    <filter root="/conf/sadashiv"/>
+    <filter root="/etc/clientlibs/sadashiv"/>
+    <filter root="/content/sadashiv"/>
+    <filter root="/apps/sadashiv"/>
+</workspaceFilter>

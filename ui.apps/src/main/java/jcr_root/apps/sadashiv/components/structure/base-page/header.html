@@ -1,0 +1,44 @@
+<sly data-sly-use.model="${'com.kiran.sling.components.clientlib.ClientlibsComponent' @ fileType='js', fileName='header', resolver=resolver}">
+    <script src="${model.artifactFile}" type="text/javascript"></script>
+</sly>
+<div id="header-component">
+    The Header Component to render here.
+</div>
+<script type="text/javascript">
+    var data = {
+  "logo": {
+    "title": "Notice Board Dashboard",
+    "imagePath": "/images/om-symbol.png",
+    "targetUrl": "/"
+  },
+  "signInInfo": {
+    "userName": "Shiva",
+    "iconPath": "/content/sadashiv/sample.png",
+    "iconClass": "account_circle"
+  },
+  "links": [
+    {
+      "text": "Dashboard",
+      "targetUrl": "/"
+    },
+    {
+      "text": "Computer",
+      "targetUrl": "/content/sadashiv/computer"
+    },
+    {
+      "text": "Mechanical",
+      "targetUrl": "/content/sadashiv/mechanical"
+    },
+    {
+      "text": "Electronics",
+      "targetUrl": "/content/sadashiv/electronics"
+    },
+    {
+      "text": "IT",
+      "targetUrl": "/content/sadashiv/it"
+    }
+  ]
+};
+
+window.kiran.renderComponents('Header', data, 'header-component');
+</script>

@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Content-Package-Roots: /home/users/sadashiv,/etc/clientlibs/sadashiv,/
+ content/sadashiv,/apps/sadashiv,/home/users/system/sadashiv,/conf/sad
+ ashiv
+Content-Package-Type: mixed
+Content-Package-Id: kiran:sadashiv:1.0
+

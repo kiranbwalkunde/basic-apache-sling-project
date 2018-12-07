@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>${properties.title}</title>
+        <meta charset="UTF-8">
+        <sly data-sly-include="headlibs.html" />
+    </head>
+    <body class="${properties.templateName}">
+        <sly data-sly-include="header.html" />
+        <sly data-sly-include="content.html" />
+        <sly data-sly-include="footer.html" />
+    </body>
+    <sly data-sly-include="footlibs.html" />
+</html>

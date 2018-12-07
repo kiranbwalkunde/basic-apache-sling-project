@@ -1,0 +1,19 @@
+<!-- Including the Styles and the Assets in this File. -->
+
+<!-- Load the Vendor Files. React / ReactDOM. -->
+<sly data-sly-use.model="${'com.kiran.sling.components.clientlib.ClientlibsComponent' @ fileType='js', fileName='vendor', resolver=resolver}">
+    <script src="${model.artifactFile}" type="text/javascript"></script>
+</sly>
+
+<sly data-sly-use.model="${'com.kiran.sling.components.clientlib.ClientlibsComponent' @ fileType='js', fileName='runtime', resolver=resolver}">
+    <script src="${model.artifactFile}" type="text/javascript"></script>
+</sly>
+
+<sly data-sly-use.model="${'com.kiran.sling.components.clientlib.ClientlibsComponent' @ fileType='js', fileName='renderComponents', resolver=resolver}">
+    <script src="${model.artifactFile}" type="text/javascript"></script>
+</sly>
+
+<!-- Load the Style Files. -->
+<sly data-sly-use.model="${'com.kiran.sling.components.clientlib.ClientlibsComponent' @ fileType='css', fileName='style', resolver=resolver}">
+    <link rel="stylesheet" href="${model.artifactFile}">
+</sly>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+    jcr:primaryType="rep:SystemUser"
+    jcr:uuid="51d18fff-a489-3209-aee3-5887b92999d2"
+    rep:authorizableId="shiva-write-service"
+    rep:principalName="shiva-write-service"/>
