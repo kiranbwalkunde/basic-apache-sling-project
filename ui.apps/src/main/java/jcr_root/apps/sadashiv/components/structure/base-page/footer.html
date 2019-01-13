@@ -1,1 +1,40 @@
-The Footer File here.
+<sly data-sly-use.model="${'com.kiran.sling.components.clientlib.ClientlibsComponent' @ fileType='js', fileName='footer', resolver=resolver}">
+    <script src="${model.artifactFile}" type="text/javascript"></script>
+</sly>
+<div id="footer-component">
+    The Footer Component to render here.
+</div>
+<script type="text/javascript">
+    var data = {
+  "links": [
+    {
+      "title": "Facebook",
+      "iconName": "access_alarm",
+      "targetUrl": "https://www.facebook.com/kiran.walkunde"
+    },
+    {
+      "title": "Linked IN",
+      "iconName": "access_time",
+      "targetUrl": "https://www.linkedin.com/kiran.walkunde"
+    },
+    {
+      "title": "Google Plus",
+      "iconName": "add_a_photo",
+      "targetUrl": "https://www.plus.google.com/kiran.walkunde"
+    },
+    {
+      "title": "Twitter",
+      "iconName": "add_location",
+      "targetUrl": "https://www.twitter.com/kiran.walkunde"
+    }
+  ],
+  "copyRightText": "This is the Example of the Copyright Text.",
+  "logo": {
+    "imageUrl": "images/om-symbol.png",
+    "title": "Go To Dashboard",
+    "targetUrl": "/"
+  }
+};
+
+window.kiran.renderComponents('Footer', data, 'footer-component');
+</script>

@@ -7,7 +7,9 @@
     </head>
     <body class="${properties.templateName}">
         <sly data-sly-include="header.html" />
-        <sly data-sly-include="content.html" />
+        <div class="container">
+            <sly data-sly-include="content.html"></sly>
+        </div>
         <sly data-sly-include="footer.html" />
     </body>
     <sly data-sly-include="footlibs.html" />
