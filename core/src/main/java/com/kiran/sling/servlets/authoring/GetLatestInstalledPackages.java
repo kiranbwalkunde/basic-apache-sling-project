@@ -1,11 +1,9 @@
 package com.kiran.sling.servlets.authoring;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
+import com.kiran.sling.constants.ServletUrlConstants;
 import com.kiran.sling.models.PackageInfoModel;
 
+import com.kiran.sling.utils.ServletUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Properties;
@@ -57,11 +55,10 @@ import java.util.stream.Collectors;
         description = "The OSGI Servlet to get the paths of the installed packages", metatype = true)
 @Service(Servlet.class)
 @Properties({
-        @Property(name = "sling.servlet.paths", value = {"/bin/services/sadashiv/private/packages"}),
+        @Property(name = "sling.servlet.paths", value = {ServletUrlConstants.GET_LATEST_FILES}),
         @Property(name = "sling.servlet.methods", value = {HttpConstants.METHOD_GET}),
         // The Package Names to be scanned in the package directory for latest version check.
         @Property(name = "packages", value = {"shiva", "shakti"}, unbounded = PropertyUnbounded.ARRAY)
-
     })
 public class GetLatestInstalledPackages extends SlingSafeMethodsServlet {
 
@@ -106,7 +103,7 @@ public class GetLatestInstalledPackages extends SlingSafeMethodsServlet {
                          final SlingHttpServletResponse response)
             throws ServletException, IOException {
         // Get the JCR Session so as to get the JCR Nodes / packages as per the current logged in users permissions.
-        final Session jcrSession = getJcrSession(request);
+        final Session jcrSession = ServletUtils.getJcrSession(request);
         if (jcrSession != null) {
             // Get the JCR Manager for the Package Level Activities.
             final JcrPackageManager packageManager = packaging.getPackageManager(jcrSession);
@@ -116,13 +113,13 @@ public class GetLatestInstalledPackages extends SlingSafeMethodsServlet {
                 // Get the Map containing the basic details which has the latest version of the mentioned packages.
                 final Map<String, PackageInfoModel> packagesMap = getMapOfLatestPackages(packageList);
                 // Write the Map to the Response.
-                writeThePackageInfoToResponse(response, packagesMap);
+                ServletUtils.writeThePackageInfoToResponse(response, packagesMap);
             } catch (final RepositoryException repositoryException) {
                 LOGGER.error("Exception while reading the List of Packages ", repositoryException);
-                writeErrorResponse(response, 500, "Exception while reading packages information.");
+                ServletUtils.writeErrorResponse(response, 500, "Exception while reading packages information.");
             }
         } else {
-            writeErrorResponse(response, 403, "Please verify your permissions.");
+            ServletUtils.writeErrorResponse(response, 403, "Please verify your permissions.");
         }
     }
 
@@ -188,54 +185,5 @@ public class GetLatestInstalledPackages extends SlingSafeMethodsServlet {
                 .stream()
                 .filter(predicate)
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * The Method to get the Resource Resolver from the JCR Session.
-     *
-     * @param request the Request to get the Resource Resolver and later adapt to Session.
-     * @return session the JCR Session.
-     */
-    private Session getJcrSession(final SlingHttpServletRequest request) {
-        return request.getResourceResolver().adaptTo(Session.class);
-    }
-
-    /**
-     * The Method to write the Error / Exception cases.
-     *
-     * @param response the Response Object to write into.
-     * @param status the HTTP Status to send to the author.
-     * @param message the message describing the issue.
-     * @throws IOException the IO Exception if any.
-     */
-    private void writeErrorResponse(final SlingHttpServletResponse response,
-                                    final int status,
-                                    final String message) throws IOException {
-        response.sendError(status, message);
-    }
-
-    /**
-     * The Method to write the Response of the evaluated packages.
-     *
-     * @param response the Response object to write the values into.
-     * @param packagesMap the evaluated packages map.
-     * @throws IOException the IO Exception if any.
-     */
-    private void writeThePackageInfoToResponse(final SlingHttpServletResponse response,
-                                               final Map<String, PackageInfoModel> packagesMap)
-            throws IOException {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        try {
-            final String jsonString = objectMapper.writeValueAsString(packagesMap);
-            // Send the Response in JSON format.
-            response.setContentType("application/json");
-            // Write the Response to the Response writer.
-            response.getWriter().write(jsonString);
-            LOGGER.debug("The Response has been written {}", jsonString);
-        } catch (final JsonProcessingException jsonProcessingException) {
-            LOGGER.error("Unable to process the created map {}", packagesMap, jsonProcessingException);
-            writeErrorResponse(response, 500, "Unable to process the created map.");
-        }
     }
 }
